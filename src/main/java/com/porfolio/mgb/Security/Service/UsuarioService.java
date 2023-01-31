@@ -12,17 +12,17 @@ import java.util.Optional;
 @Transactional
 public class UsuarioService {
     @Autowired
-    iUsuarioRepository usuariorepository;
+    iUsuarioRepository iusuariorepository;
     public Optional <Usuario>getByNombreUsuario(String nombreUsuario){
-         return usuariorepository.findByNombreUsuario(nombreUsuario);
+         return iusuariorepository.findByNombreUsuario(nombreUsuario);
     }
     public boolean existByNombreUsuario (String nombreUsuario){
-        return usuariorepository.existsByNombreUsuario(nombreUsuario);
+        return iusuariorepository.existsByNombreUsuario(nombreUsuario);
     }
     public boolean existByEmail (String email){
-        return usuariorepository.existsByEmail(email);
+        return iusuariorepository.existsByEmail(email);
    }
     public void save (Usuario usuario){
-       usuariorepository.save(usuario);
+       iusuariorepository.save(usuario);
   }
 }
