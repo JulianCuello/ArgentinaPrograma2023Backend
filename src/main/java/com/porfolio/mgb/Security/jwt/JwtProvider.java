@@ -2,8 +2,7 @@ package com.porfolio.mgb.Security.jwt;
 
 
 import com.porfolio.mgb.Security.Entity.UsuarioPrincipal;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -25,6 +24,26 @@ public class JwtProvider {
         public String genereteToken (Authentication authentication){
             UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
             return Jwts.builder().setSubject(usuarioPrincipal.getUsername()).setIssuedAt(new Date()).setExpiration(new Date(new Date().getTime()+expiration*1000)).signWith(SignatureAlgorithm.HS512, secret).compact();
+        }
+        public String getNombreUsuarioFromToken(String token){
+            return Jwts.parser().setSigningKey(secret).parseClaimsJwt(token).getBody().getSubject();
+        }
+        public boolean validateToken (String token) {
+            try {
+                Jwts.parser().setSigningKey(secret).parseClaimsJwt(token);
+                return true;
+            } catch (MalformedJwtException e) {
+                logger.error("token mal formado");
+            } catch (UnsupportedJwtException e) {
+                logger.error("token no soportado");
+            } catch (ExpiredJwtException e) {
+                logger.error("token expirado");
+            } catch (IllegalArgumentException e) {
+                logger.error("token vacio");
+            } catch (SignatureException e) {
+                logger.error("Firma no valida");
+            }
+            return false;
         }
 }
 
