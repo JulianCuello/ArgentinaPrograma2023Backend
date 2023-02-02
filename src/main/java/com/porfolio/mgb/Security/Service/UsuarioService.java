@@ -16,13 +16,15 @@ public class UsuarioService {
     public Optional <Usuario>getByNombreUsuario(String nombreUsuario){
          return iusuariorepository.findByNombreUsuario(nombreUsuario);
     }
-    public boolean existByNombreUsuario (String nombreUsuario){
+    public boolean existsByNombreUsuario (String nombreUsuario){
         return iusuariorepository.existsByNombreUsuario(nombreUsuario);
     }
-    public boolean existByEmail (String email){
+    public boolean existsByEmail (String email){
         return iusuariorepository.existsByEmail(email);
    }
     public void save (Usuario usuario){
        iusuariorepository.save(usuario);
   }
+
+
 }
